@@ -10,6 +10,7 @@ class CustomUser(AbstractUser):
     email = models.EmailField('email address', unique=True)
     password = models.CharField(max_length=255)
     username = models.CharField(max_length=100, blank=True, null=True)
+    # donor_application = models.OneToOneField(DonorAccount, on_delete=models.CASCADE, blank=True, null=True)
 
     is_active = models.BooleanField(
         _("active"),

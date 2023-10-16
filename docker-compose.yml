@@ -22,7 +22,7 @@ services:
     restart: always
     environment:
       POSTGRES_DB: airbaby_db
-      POSTGRES_USER: nikita
+      POSTGRES_USER: ubuntu
       POSTGRES_PASSWORD: 1
     volumes:
       - postgres_data:/var/lib/postgresql/data/
