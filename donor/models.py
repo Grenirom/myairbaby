@@ -1,7 +1,9 @@
 from uuid import uuid4
 
+from django.contrib.auth import get_user_model
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
+import uuid
 
 ED_CHOICES = (
     ('no_education', 'Без образования'),
@@ -52,14 +54,14 @@ PERSONALITY_TYPE_CHOICES = (
 
 
 class DonorApplication(models.Model):
-    special_code = models.CharField(max_length=3333)
+    special_code = models.UUIDField(default=uuid.uuid4(), editable=False)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     age = models.IntegerField(
         validators=[
             MinValueValidator(18, message='Возраст не может быть меньше 18 лет!'),
             MaxValueValidator(30, message='Возраст не может быть больше 30 лет!')
-        ], null=True
+        ]
     )
     date_of_birth = models.DateField()
     date_of_menstrual_cycle = models.DateField()
@@ -93,13 +95,11 @@ class DonorApplication(models.Model):
     personality_type = models.CharField(max_length=60, choices=PERSONALITY_TYPE_CHOICES)
 
     phone_number = models.CharField(max_length=13)
-    email = models.EmailField(unique=True)
+    user_email = models.ForeignKey('account.CustomUser', to_field='email',
+                                   on_delete=models.CASCADE, related_name='donor_applications')
 
     comment = models.TextField()
 
     def __str__(self):
         return f'{self.special_code}'
 
-    def create_special_code(self):
-        code = str(uuid4())
-        self.special_code = code

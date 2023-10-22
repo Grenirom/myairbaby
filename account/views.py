@@ -3,6 +3,7 @@ from rest_framework.exceptions import AuthenticationFailed
 from rest_framework import generics, permissions, viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from .serializers import UserSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
@@ -40,8 +41,8 @@ class UserProfileViewSet(viewsets.ModelViewSet):
         user_instance = self.get_object()
 
         try:
-            seller_profile_instance = User.objects.get(user=user_instance)
-            serializer = self.get_serializer(seller_profile_instance)
+            user_profile_instance = User.objects.get(user=user_instance)
+            serializer = self.get_serializer(user_profile_instance)
             return Response(serializer.data)
         except User.DoesNotExist:
             return Response({"detail": "Profile does not exist"}, status=status.HTTP_404_NOT_FOUND)
@@ -66,6 +67,24 @@ class UserProfileViewSet(viewsets.ModelViewSet):
 
         return Response({'msg': 'Account deleted'}, status=204)
 
+
+class ApproveSellerView(APIView):
+    permission_classes = [permissions.IsAdminUser, ]
+
+    def post(self, request, pk):
+        try:
+            user = User.objects.get(pk=pk)
+        except User.DoesNotExist:
+            return Response({"message": "User not found."},
+                            status=status.HTTP_404_NOT_FOUND)
+
+        if not user.is_allowed:
+            return Response({"message": "Application was not found!"}, status=status.HTTP_400_BAD_REQUEST)
+
+        user.is_allowed = True
+        user.save()
+
+        return Response({"message": "Seller approved."}, status=status.HTTP_200_OK)
 
 
 class LoginView(TokenObtainPairView):

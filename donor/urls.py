@@ -1,9 +1,9 @@
 from django.urls import path, include
-from rest_framework.routers import DefaultRouter
 
-from donor.views import DonorRegisterView
+from donor.views import DonorAllApplicationView, DonorCreateView, DonorPreviewForAllowed
 
 urlpatterns = [
-    path('create/', DonorRegisterView.as_view()),
-
+    path('list/', DonorAllApplicationView.as_view()),
+    path('create/', DonorCreateView.as_view()),
+    path('list-for-allowed/', DonorPreviewForAllowed.as_view()),
 ]
