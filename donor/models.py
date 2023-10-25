@@ -115,6 +115,10 @@ class DonorApplication(models.Model):
 
     comment = models.TextField()
 
+    photo_fas = models.ImageField(upload_to='media/donor')
+    photo_full = models.ImageField(upload_to='media/donor')
+    photo_side = models.ImageField(upload_to='media/donor')
+
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

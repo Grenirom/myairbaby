@@ -22,6 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('account/', include('account.urls')),
     path('donor/', include('donor.urls')),
+    path('surrogacy/', include('surrogacy.urls')),
 
 ]
 

@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     # my_apps
     'account',
     'donor',
+    'surrogacy'
 
 ]
 
@@ -207,7 +208,7 @@ CORS_ALLOWED_ORIGINS = [
 SWAGGER_SETTINGS = {
     'SECURITY_DEFINITIONS': {
         'Token': {
-            'type': 'apiKey',
+            'type': 'Bearer',
             'name': 'Authorization',
             'in': 'header',
         },
