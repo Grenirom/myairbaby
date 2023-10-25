@@ -88,17 +88,34 @@ class DonorApplication(models.Model):
     mothers_hair_colour = models.CharField(max_length=70)
     mothers_eye_colour = models.CharField(max_length=70)
 
+    children = models.IntegerField(
+        validators=[
+            MinValueValidator(0, message='Количество не может быть меньше 0'),
+            MaxValueValidator(10, message='Количество не может быть больше 10'),
+        ]
+    )
+
+    brothers_sisters = models.IntegerField(
+        validators=[
+            MinValueValidator(0, 'Количество не может быть меньше 0'),
+            MaxValueValidator(10, message='Количество  не может быть больше 10'),
+        ]
+    )
     fathers_hair_colour = models.CharField(max_length=70)
     fathers_eye_colour = models.CharField(max_length=70)
 
     health_status = models.CharField(max_length=50, choices=HEALTH_CHOICES)
     personality_type = models.CharField(max_length=60, choices=PERSONALITY_TYPE_CHOICES)
 
+    hobby = models.CharField(max_length=100)
+
     phone_number = models.CharField(max_length=13)
     user_email = models.ForeignKey('account.CustomUser', to_field='email',
                                    on_delete=models.CASCADE, related_name='donor_applications')
 
     comment = models.TextField()
+
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f'{self.special_code}'

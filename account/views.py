@@ -68,23 +68,23 @@ class UserProfileViewSet(viewsets.ModelViewSet):
         return Response({'msg': 'Account deleted'}, status=204)
 
 
-class ApproveSellerView(APIView):
-    permission_classes = [permissions.IsAdminUser, ]
-
-    def post(self, request, pk):
-        try:
-            user = User.objects.get(pk=pk)
-        except User.DoesNotExist:
-            return Response({"message": "User not found."},
-                            status=status.HTTP_404_NOT_FOUND)
-
-        if not user.is_allowed:
-            return Response({"message": "Application was not found!"}, status=status.HTTP_400_BAD_REQUEST)
-
-        user.is_allowed = True
-        user.save()
-
-        return Response({"message": "Seller approved."}, status=status.HTTP_200_OK)
+# class ApproveSellerView(APIView):
+#     permission_classes = [permissions.IsAdminUser, ]
+#
+#     def post(self, request, pk):
+#         try:
+#             user = User.objects.get(pk=pk)
+#         except User.DoesNotExist:
+#             return Response({"message": "User not found."},
+#                             status=status.HTTP_404_NOT_FOUND)
+#
+#         if not user.is_allowed:
+#             return Response({"message": "Application was not found!"}, status=status.HTTP_400_BAD_REQUEST)
+#
+#         user.is_allowed = True
+#         user.save()
+#
+#         return Response({"message": "Seller approved."}, status=status.HTTP_200_OK)
 
 
 class LoginView(TokenObtainPairView):
