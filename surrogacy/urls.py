@@ -8,6 +8,7 @@ router.register('', views.SurrogacyMyApplicationViewSet, basename='surrogacy-app
 urlpatterns = [
     path('create-application/', views.SurrogacyCreateView.as_view()),
     path('admin-list/', views.SurrogacyAdminListView.as_view()),
+    path('admin-detail/<int:pk>/', views.SurrogacyAdminDetailView.as_view()),
     path('', include(router.urls)),
 
 ]

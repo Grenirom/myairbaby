@@ -73,3 +73,9 @@ class SurrogacyMyApplicationViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
     http_method_names = ['patch', 'get']
+
+
+class SurrogacyAdminDetailView(generics.RetrieveAPIView):
+    queryset = Surrogacy.objects.all()
+    serializer_class = SurrogacyAdminListSerializer
+    permission_classes = [permissions.IsAdminUser, ]
