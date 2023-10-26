@@ -6,7 +6,7 @@ from rest_framework.response import Response
 
 from account.permissions import IsOwnerOrAdmin
 from .models import Surrogacy
-from .serializers import SurrogacyCreateSerializer
+from .serializers import SurrogacyCreateSerializer, SurrogacyAdminListSerializer, SurrogacyUpdateSerializer
 
 User = get_user_model()
 
@@ -24,16 +24,20 @@ class SurrogacyCreateView(generics.CreateAPIView):
 
 class SurrogacyAdminListView(generics.ListAPIView):
     queryset = Surrogacy.objects.all()
-    serializer_class = SurrogacyCreateSerializer
+    serializer_class = SurrogacyAdminListSerializer
     permission_classes = [permissions.IsAdminUser, ]
 
 
 class SurrogacyMyApplicationViewSet(viewsets.ModelViewSet):
-    serializer_class = SurrogacyCreateSerializer
+    serializer_class = SurrogacyAdminListSerializer
     permission_classes = [IsOwnerOrAdmin, ]
 
     def get_queryset(self):
         return User.objects.filter(pk=self.request.user.pk)
+
+    def get_serializer_class(self):
+        if self.request.method == 'PATCH':
+            return SurrogacyUpdateSerializer
 
     @action(detail=False, methods=['PATCH'])
     def update_my_application(self, request):
@@ -65,10 +69,7 @@ class SurrogacyMyApplicationViewSet(viewsets.ModelViewSet):
         if not sur_application:
             return Response({'detail': 'Surrogacy application not found for the user'},
                             status=status.HTTP_404_NOT_FOUND)
-        serializer = self.get_serializer(sur_application,
-                                         data=request.data)
-        serializer.is_valid(raise_exception=True)
-
+        serializer = SurrogacyAdminListSerializer(sur_application)
         return Response(serializer.data)
 
     http_method_names = ['patch', 'get']

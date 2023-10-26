@@ -1,3 +1,5 @@
+import uuid
+
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 
@@ -17,8 +19,9 @@ BLOOD_TYPE = (
 
 
 class Surrogacy(models.Model):
+    special_code = models.UUIDField(default=uuid.uuid4(), editable=False)
     owner_email = models.ForeignKey(CustomUser, on_delete=models.CASCADE,
-                                    related_name='surrogacy_applications')
+                                    to_field='email', related_name='surrogacy_applications')
     first_name = models.CharField(max_length=70)
     last_name = models.CharField(max_length=70)
     date_of_birth = models.DateField()
