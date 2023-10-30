@@ -23,6 +23,7 @@ urlpatterns = [
     path('account/', include('account.urls')),
     path('donor/', include('donor.urls')),
     path('surrogacy/', include('surrogacy.urls')),
+    path('news/', include('news.urls')),
 
 ]
 

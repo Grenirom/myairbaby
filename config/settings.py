@@ -49,7 +49,8 @@ INSTALLED_APPS = [
     # my_apps
     'account',
     'donor',
-    'surrogacy'
+    'surrogacy',
+    'news',
 
 ]
 

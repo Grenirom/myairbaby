@@ -68,4 +68,17 @@ class DonorUpdateViewSet(viewsets.ModelViewSet):
         serializer.save()
         return Response(serializer.data)
 
-    http_method_names = ['patch', ]
+    @action(detail=False, methods=['GET'])
+    def my_application(self, request):
+        if self.request.user.is_anonymous:
+            raise AuthenticationFailed("You are not authenticated. Please provide a valid token.")
+        user = self.request.user
+        donor_application = DonorApplication.objects.filter(user_email=user).first()
+
+        if not donor_application:
+            return Response({'detail': 'Donor application not found for the user'},
+                            status=status.HTTP_404_NOT_FOUND)
+        serializer = DonorListSerializer(donor_application)
+        return Response(serializer.data)
+
+    http_method_names = ['patch', 'get']
