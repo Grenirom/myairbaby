@@ -14,6 +14,10 @@ class New(models.Model):
     def __str__(self):
         return self.title
 
+    class Meta:
+        verbose_name = 'Новость'
+        verbose_name_plural = 'Новости'
+
 
 class Rate(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='rating')
@@ -25,8 +29,22 @@ class Rate(models.Model):
         ], blank=True, null=True
     )
 
+    def __str__(self):
+        return f'{self.user} -> {self.new} -> {self.rating}'
+
+    class Meta:
+        verbose_name = 'Рейтинг'
+        verbose_name_plural = 'Рейтинги'
+
 
 class Comment(models.Model):
     comment = models.TextField()
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comments')
     new = models.ForeignKey(New, on_delete=models.CASCADE, related_name='comments')
+
+    def __str__(self):
+        return f'{self.user} -> {self.new} -> {self.comment}'
+
+    class Meta:
+        verbose_name = 'Комментарий'
+        verbose_name_plural = 'Комментарии'

@@ -18,3 +18,9 @@ class Review(models.Model):
     )
     created_at = models.DateField(auto_now_add=True)
 
+    def __str__(self):
+        return f'{self.user} -> {self.comment} -> {self.rating}'
+
+    class Meta:
+        verbose_name = 'Отзыв о агенстве'
+        verbose_name_plural = 'Отзывы о агенстве'

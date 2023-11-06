@@ -124,3 +124,8 @@ class DonorApplication(models.Model):
     def __str__(self):
         return f'{self.special_code}'
 
+    class Meta:
+        verbose_name = 'Донор'
+        verbose_name_plural = 'Доноры'
+
+
