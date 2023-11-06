@@ -5,7 +5,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .serializers import UserSerializer
+from .serializers import UserSerializer, UserUpdateSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from .permissions import IsOwnerOrAdmin
@@ -26,8 +26,13 @@ class AllUsersView(generics.ListAPIView):
 
 
 class UserProfileViewSet(viewsets.ModelViewSet):
-    serializer_class = UserSerializer
     permission_classes = [IsOwnerOrAdmin, ]
+
+    def get_serializer_class(self, *args, **kwargs):
+        if self.request.method in ('PATCH', 'PUT'):
+            return UserUpdateSerializer
+        elif self.request.method == 'GET':
+            return UserSerializer
 
     def get_queryset(self):
         return User.objects.filter(pk=self.request.user.pk)  # Фильтруем по текущему пользователю
@@ -66,25 +71,6 @@ class UserProfileViewSet(viewsets.ModelViewSet):
         current_user.delete()
 
         return Response({'msg': 'Account deleted'}, status=204)
-
-
-# class ApproveSellerView(APIView):
-#     permission_classes = [permissions.IsAdminUser, ]
-#
-#     def post(self, request, pk):
-#         try:
-#             user = User.objects.get(pk=pk)
-#         except User.DoesNotExist:
-#             return Response({"message": "User not found."},
-#                             status=status.HTTP_404_NOT_FOUND)
-#
-#         if not user.is_allowed:
-#             return Response({"message": "Application was not found!"}, status=status.HTTP_400_BAD_REQUEST)
-#
-#         user.is_allowed = True
-#         user.save()
-#
-#         return Response({"message": "Seller approved."}, status=status.HTTP_200_OK)
 
 
 class LoginView(TokenObtainPairView):

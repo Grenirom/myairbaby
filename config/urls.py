@@ -24,7 +24,7 @@ urlpatterns = [
     path('donor/', include('donor.urls')),
     path('surrogacy/', include('surrogacy.urls')),
     path('news/', include('news.urls')),
-
+    path('review/', include('review.urls')),
 ]
 
 urlpatterns += static(

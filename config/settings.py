@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'donor',
     'surrogacy',
     'news',
+    'review',
 
 ]
 
