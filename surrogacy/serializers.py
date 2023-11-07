@@ -21,3 +21,9 @@ class SurrogacyUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Surrogacy
         exclude = ('special_code', 'owner_email')
+
+
+class SurrogacyForReprSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Surrogacy
+        fields = ('id', 'special_code' )

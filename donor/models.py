@@ -110,7 +110,7 @@ class DonorApplication(models.Model):
     hobby = models.CharField(max_length=100)
 
     phone_number = models.CharField(max_length=13)
-    user_email = models.ForeignKey('account.CustomUser', to_field='email',
+    user = models.ForeignKey('account.CustomUser', to_field='email',
                                    on_delete=models.CASCADE, related_name='donor_applications')
 
     comment = models.TextField()

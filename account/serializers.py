@@ -2,6 +2,9 @@ from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from django.contrib.auth.password_validation import validate_password
 
+from donor.serializers import DonorForReprSerializer
+from surrogacy.serializers import SurrogacyForReprSerializer
+
 User = get_user_model()
 
 
@@ -9,6 +12,12 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         exclude = ('password', )
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation['surrogacy_applications'] = SurrogacyForReprSerializer(instance.surrogacy_applications.all(), many=True).data
+        representation['donor_applications'] = DonorForReprSerializer(instance.donor_applications.all(), many=True).data
+        return representation
 
 
 class RegisterSerializer(serializers.ModelSerializer):
