@@ -1,9 +1,16 @@
 from requests import Response
 from rest_framework import generics, permissions, viewsets
-
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import SearchFilter
+from rest_framework.pagination import PageNumberPagination
 from .mixins import RatingMixin, CommentMixin
 from .models import New
 from .serializers import NewCreateSerializer, NewSerializer
+
+
+class StandartResultPagination(PageNumberPagination):
+    page_size = 5
+    page_query_param = 'page'
 
 
 class NewCreateView(generics.CreateAPIView):
@@ -15,6 +22,7 @@ class NewCreateView(generics.CreateAPIView):
 class NewViewSet(viewsets.ModelViewSet, RatingMixin, CommentMixin):
     queryset = New.objects.all()
     serializer_class = NewSerializer
+    pagination_class = StandartResultPagination
 
     def get_permissions(self):
         if self.action == 'create':

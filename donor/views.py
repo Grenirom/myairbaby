@@ -6,14 +6,25 @@ from rest_framework.response import Response
 from .models import DonorApplication
 from .serializers import DonorRegisterSerializer, DonorListSerializer, DonorListForAllowed, DonorUpdateSerializer
 from account.permissions import IsOwnerOrAdmin, IsAdminOrAllowedPerson
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import SearchFilter
+from rest_framework.pagination import PageNumberPagination
 
 
 User = get_user_model()
 
 
+class StandartResultPagination(PageNumberPagination):
+    page_size = 5
+    page_query_param = 'page'
+
+
 class DonorAllApplicationView(generics.ListAPIView):
     queryset = DonorApplication.objects.all()
     serializer_class = DonorListSerializer
+    pagination_class = StandartResultPagination
+    filter_backends = (DjangoFilterBackend, SearchFilter)
+    filterset_fields = ('age', 'weight')
     permission_classes = [permissions.IsAdminUser, ]
 
 
@@ -29,18 +40,22 @@ class DonorCreateView(generics.CreateAPIView):
 
 
 class DonorPreviewForAllowed(generics.ListAPIView):
+    pagination_class = StandartResultPagination
+    filter_backends = (DjangoFilterBackend, SearchFilter)
+    filterset_fields = ('age', 'weight')
     serializer_class = DonorListForAllowed
     permission_classes = [IsAdminOrAllowedPerson, ]
+
 
     def get_queryset(self):
         if self.request.user.is_anonymous and not self.request.user.is_allowed:
             raise AuthenticationFailed("You are not authenticated. Please provide a valid token.")
         return DonorApplication.objects.all()
 
-    def list(self, request, *args, **kwargs):
-        queryset = self.get_queryset()
-        serializer = self.get_serializer(queryset, many=True)
-        return Response(serializer.data, status=200)
+    # def list(self, request, *args, **kwargs):
+    #     queryset = self.get_queryset()
+    #     serializer = self.get_serializer(queryset, many=True)
+    #     return Response(serializer.data, status=200)
 
 
 class DonorUpdateViewSet(viewsets.ModelViewSet):

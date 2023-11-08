@@ -3,12 +3,20 @@ from rest_framework import permissions, generics, viewsets, status
 from rest_framework.decorators import action
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.response import Response
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import SearchFilter
+from rest_framework.pagination import PageNumberPagination
 
 from account.permissions import IsOwnerOrAdmin
 from .models import Surrogacy
 from .serializers import SurrogacyCreateSerializer, SurrogacyAdminListSerializer, SurrogacyUpdateSerializer
 
 User = get_user_model()
+
+
+class StandartResultPagination(PageNumberPagination):
+    page_size = 5
+    page_query_param = 'page'
 
 
 class SurrogacyCreateView(generics.CreateAPIView):
@@ -24,6 +32,9 @@ class SurrogacyCreateView(generics.CreateAPIView):
 
 class SurrogacyAdminListView(generics.ListAPIView):
     queryset = Surrogacy.objects.all()
+    pagination_class = StandartResultPagination
+    filter_backends = (DjangoFilterBackend, SearchFilter)
+    filterset_fields = ('weight', )
     serializer_class = SurrogacyAdminListSerializer
     permission_classes = [permissions.IsAdminUser, ]
 
