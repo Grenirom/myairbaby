@@ -71,7 +71,7 @@ class DonorUpdateViewSet(viewsets.ModelViewSet):
             raise AuthenticationFailed("Вы не авторизованы. Пожалуйста, предоставьте действительный токен.")
 
         user = self.request.user
-        donor_applications = DonorApplication.objects.filter(user_email=user).all()
+        donor_applications = DonorApplication.objects.filter(user=user).all()
 
         if not donor_applications:
             return Response({'detail': 'Заявка донора не найдена для данного пользователя'},

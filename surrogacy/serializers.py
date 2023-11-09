@@ -4,7 +4,7 @@ from surrogacy.models import Surrogacy
 
 
 class SurrogacyCreateSerializer(serializers.ModelSerializer):
-    owner_email = serializers.ReadOnlyField(source='owner.email')
+    user = serializers.ReadOnlyField(source='user.email')
 
     class Meta:
         model = Surrogacy
@@ -20,10 +20,11 @@ class SurrogacyAdminListSerializer(serializers.ModelSerializer):
 class SurrogacyUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Surrogacy
-        exclude = ('special_code', 'owner_email')
+        exclude = ('id', 'special_code', 'user')
 
 
 class SurrogacyForReprSerializer(serializers.ModelSerializer):
     class Meta:
         model = Surrogacy
         fields = ('id', 'special_code' )
+

@@ -20,7 +20,7 @@ BLOOD_TYPE = (
 
 class Surrogacy(models.Model):
     special_code = models.UUIDField(default=uuid.uuid4(), editable=False)
-    owner_email = models.ForeignKey(CustomUser, on_delete=models.CASCADE,
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE,
                                     to_field='email', related_name='surrogacy_applications')
     first_name = models.CharField(max_length=70)
     last_name = models.CharField(max_length=70)
@@ -98,7 +98,7 @@ class Surrogacy(models.Model):
     manager_name = models.CharField(max_length=60, blank=True)
 
     def __str__(self):
-        return self.special_code
+        return f'{self.special_code}'
 
     class Meta:
         verbose_name = 'Анкета суррогатной матери'
