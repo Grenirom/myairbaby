@@ -53,9 +53,9 @@ class Surrogacy(models.Model):
     arterial_pressure = models.CharField(max_length=500)
 
     children = models.JSONField(default=list, blank=True)
-    breastfeeding = models.CharField(10, choices=TYPE_CHOICES)
+    breastfeeding = models.CharField(max_length=50, choices=TYPE_CHOICES)
     when_breast_feed = models.DateField()
-    usage_hormon_contr = models.CharField(10, choices=TYPE_CHOICES)
+    usage_hormon_contr = models.CharField(max_length=50, choices=TYPE_CHOICES)
 
     blood_type = models.CharField(max_length=100, choices=BLOOD_TYPE)
     menstrual_cycle = models.CharField(max_length=120)
@@ -91,7 +91,7 @@ class Surrogacy(models.Model):
     how_learned_about_surrogacy_program = models.TextField()
     family_approval = models.CharField(max_length=50, choices=TYPE_CHOICES)
 
-    legal_issues = models.CharField(50, choices=TYPE_CHOICES)
+    legal_issues = models.CharField(max_length=10, choices=TYPE_CHOICES)
 
     phone_number = models.CharField(max_length=50)
 
