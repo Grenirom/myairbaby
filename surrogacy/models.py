@@ -18,8 +18,12 @@ BLOOD_TYPE = (
 )
 
 
+def generate_special_code():
+    return str(uuid.uuid4())
+
+
 class Surrogacy(models.Model):
-    special_code = models.UUIDField(default=uuid.uuid4(), editable=False)
+    special_code = models.UUIDField(default=generate_special_code, editable=False)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE,
                                     to_field='email', related_name='surrogacy_applications')
     first_name = models.CharField(max_length=70)

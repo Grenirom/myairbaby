@@ -5,6 +5,8 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 import uuid
 
+from surrogacy.models import generate_special_code
+
 ED_CHOICES = (
     ('no_education', 'Без образования'),
     ('early_childhood_education', 'Дошкольное образование'),
@@ -54,7 +56,7 @@ PERSONALITY_TYPE_CHOICES = (
 
 
 class DonorApplication(models.Model):
-    special_code = models.UUIDField(default=uuid.uuid4(), editable=False)
+    special_code = models.UUIDField(default=generate_special_code, editable=False)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     age = models.IntegerField(
