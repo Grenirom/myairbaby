@@ -11,6 +11,7 @@ urlpatterns = [
     path('admin-list/', views.SurrogacyAdminListView.as_view()),
     path('admin-detail/<int:pk>/', views.SurrogacyAdminDetailView.as_view()),
     path('update-application/<int:pk>/', SurrogacyUpdateView.as_view()),
+    path('delete-application/<int:pk>/', views.SurrogacyDeleteView.as_view()),
     path('', include(router.urls)),
 
 ]

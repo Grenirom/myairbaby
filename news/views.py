@@ -36,3 +36,8 @@ class NewViewSet(viewsets.ModelViewSet, RatingMixin, CommentMixin):
         serializer.save(user=self.request.user)
 
     http_method_names = ['get', 'post']
+
+
+class NewDeleteView(generics.DestroyAPIView):
+    queryset = New.objects.all()
+    permission_classes = [permissions.IsAdminUser, ]

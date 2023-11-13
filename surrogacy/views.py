@@ -92,3 +92,8 @@ class SurrogacyUpdateView(generics.UpdateAPIView):
     queryset = Surrogacy.objects.all()
     serializer_class = SurrogacyUpdateSerializer
     permission_classes = [IsOwnerOrAdmin, ]
+
+
+class SurrogacyDeleteView(generics.DestroyAPIView):
+    queryset = Surrogacy.objects.all()
+    permission_classes = [IsOwnerOrAdmin, ]

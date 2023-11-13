@@ -7,6 +7,7 @@ router.register('', views.NewViewSet, basename='new_router')
 
 urlpatterns = [
     path('create/', views.NewCreateView.as_view()),
+    path('delete/', views.NewDeleteView.as_view()),
     path('', include(router.urls)),
 
 ]
