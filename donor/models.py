@@ -71,6 +71,7 @@ class DonorApplication(models.Model):
     country_of_residence = models.CharField(max_length=55)
     education = models.CharField(max_length=60, choices=ED_CHOICES)
     current_job = models.CharField(max_length=100)
+    address = models.CharField(max_length=200)
     marital_status = models.CharField(max_length=30, choices=MARITAL_STATUS_CHOICES)
     experience_of_donation = models.CharField(max_length=10, choices=EXP_OF_DON)
     willingness_to_travel = models.CharField(max_length=10, choices=EXP_OF_DON)

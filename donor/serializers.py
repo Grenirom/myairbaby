@@ -19,7 +19,7 @@ class DonorListSerializer(serializers.ModelSerializer):
 class DonorListForAllowed(serializers.ModelSerializer):
     class Meta:
         model = DonorApplication
-        exclude = ('user', 'last_name', 'first_name', 'phone_number', 'photo_fas', 'photo_full', 'photo_side')
+        exclude = ('user', 'last_name', 'first_name', 'phone_number', 'address')
 
 
 class DonorForReprSerializer(serializers.ModelSerializer):
