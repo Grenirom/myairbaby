@@ -8,7 +8,7 @@ from .managers import UserManager
 
 
 class CustomUser(AbstractUser):
-    email = models.EmailField('email address', unique=True)
+    email = models.EmailField('email address', unique=True, db_index=True)
     password = models.CharField(max_length=255)
     username = models.CharField(max_length=100, blank=True, null=True)
     is_allowed = models.BooleanField(default=False)
@@ -29,8 +29,6 @@ class CustomUser(AbstractUser):
     def __str__(self):
         return f'{self.email}'
 
-    class Meta:
-        verbose_name = 'Пользователь'
-        verbose_name_plural = 'Пользователи'
+
 
 
