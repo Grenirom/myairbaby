@@ -10,9 +10,8 @@ services:
       - static_volume:/usr/src/app/static
       - media_volume:/usr/src/app/media
       - logs_volume:/usr/src/app/logs
-
-    ports:
-      - "8000:8000"
+    expose:
+      - "8000"  # Используйте expose для проброса порта, который не нужно прослушивать извне
     depends_on:
       - db
       - migration
@@ -46,9 +45,9 @@ services:
     volumes:
       - static_volume:/usr/src/app/static
       - media_volume:/usr/src/app/media
+      - logs_volume:/usr/src/app/logs  # Добавлено: также монтируем логи для Nginx
     depends_on:
       - web
-
 
 volumes:
   postgres_data:
