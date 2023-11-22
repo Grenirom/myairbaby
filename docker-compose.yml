@@ -145,4 +145,3 @@ volumes:
   logs_volume:
   etc-letsencrypt:
   var-lib-letsencrypt:
-    external: true
