@@ -127,8 +127,11 @@ services:
   certbot:
     image: certbot/certbot:latest
     volumes:
-      - ./certbot/www/:/var/www/certbot/:rw
-      - ./certbot/conf/:/etc/letsencrypt/:rw
+#      - ./certbot/www/:/var/www/certbot/:rw
+#      - ./certbot/conf/:/etc/letsencrypt/:rw
+      - etc-letsencrypt:/etc/letsencrypt
+      - var-lib-letsencrypt:/var/lib/letsencrypt
+    command: certonly --webroot --webroot-path=/var/lib/letsencrypt --email your@email.com --agree-tos --no-eff-email --force-renewal -d myairbaby.net -d www.myairbaby.net
 
 networks:
   default:
@@ -141,4 +144,5 @@ volumes:
   media_volume:
   logs_volume:
   etc-letsencrypt:
+  var-lib-letsencrypt:
     external: true

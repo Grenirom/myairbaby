@@ -8,6 +8,5 @@ EXPOSE 81
 
 RUN mkdir -p /etc/letsencrypt/live/myairbaby.net
 
-COPY path/to/your/fullchain.pem /etc/letsencrypt/live/myairbaby.net/fullchain.pem
-COPY path/to/your/privkey.pem /etc/letsencrypt/live/myairbaby.net/privkey.pem
-
+COPY --from=certbot /etc/letsencrypt/live/myairbaby.net/fullchain.pem /etc/letsencrypt/live/myairbaby.net/fullchain.pem
+COPY --from=certbot /etc/letsencrypt/live/myairbaby.net/privkey.pem /etc/letsencrypt/live/myairbaby.net/privkey.pem
