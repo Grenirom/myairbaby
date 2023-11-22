@@ -3,6 +3,7 @@ from rest_framework import permissions, viewsets, status, generics
 from rest_framework.decorators import action
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.response import Response
+
 from .models import DonorApplication
 from .serializers import DonorRegisterSerializer, DonorListSerializer, DonorListForAllowed, DonorUpdateSerializer
 from account.permissions import IsOwnerOrAdmin, IsAdminOrAllowedPerson
@@ -45,7 +46,6 @@ class DonorPreviewForAllowed(generics.ListAPIView):
     filterset_fields = ('age', 'weight')
     serializer_class = DonorListForAllowed
     permission_classes = [IsAdminOrAllowedPerson, ]
-
 
     def get_queryset(self):
         if self.request.user.is_anonymous and not self.request.user.is_allowed:
