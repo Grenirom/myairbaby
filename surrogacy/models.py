@@ -93,13 +93,16 @@ class Surrogacy(models.Model):
 
     legal_issues = models.CharField(max_length=10, choices=TYPE_CHOICES)
 
-    phone_number = models.CharField(max_length=50)
-
     face_photo = models.ImageField(upload_to='media/surrogacy')
     full_body_selfie = models.ImageField(upload_to='media/surrogacy')
     passport_photo = models.ImageField(upload_to='media/surrogacy')
-
     manager_name = models.CharField(max_length=60, blank=True)
+
+    phone_number = models.CharField(max_length=50)
+
+    email = models.EmailField(unique=True, db_index=True)
+
+    tunduk_account = models.CharField(max_length=10, choices=TYPE_CHOICES)
 
     def __str__(self):
         return f'{self.special_code}'

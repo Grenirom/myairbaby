@@ -121,6 +121,7 @@ class DonorApplication(models.Model):
     photo_fas = models.ImageField(upload_to='media/donor')
     photo_full = models.ImageField(upload_to='media/donor')
     photo_side = models.ImageField(upload_to='media/donor')
+    tunduk_account = models.CharField(max_length=10, choices=EXP_OF_DON)
 
     created_at = models.DateTimeField(auto_now_add=True)
 
